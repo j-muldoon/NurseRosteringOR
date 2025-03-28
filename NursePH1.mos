@@ -1,0 +1,464 @@
+model ModelName
+  uses "mmxprs"
+  uses "mmsheet"
+  uses "mmquad"
+declarations
+  Tier = 1..9
+  WeekendG = 1..2
+  ShiftT = 1..3
+  Day = 1..42
+  Week = 1..6
+  Hour = 1..168
+  WeekCycle = 1..7
+  
+  Positions: set of string
+  PodType: set of string
+  Floating: set of string
+  MaxShifts: array(Tier) of real
+  DayWeek: array(Week, WeekCycle) of real
+  AdminPos: set of string
+  PodPositions: set of string
+  
+  NurseRows = 200
+  Name: array(1..200) of string
+  NurseTier: array(1..200) of real
+  NurseGroup: array(1..200) of real
+  PosPref: array(1..200) of string
+  
+  TotalHours = 1..1008
+  WeekP: array(1..1008) of real
+  HourD: array(1..1008) of real
+  HourW: array(1..1008) of real
+  FloatingP: array(1..1008) of real
+  PurpleP: array(1..1008) of real
+  EDOUP: array(1..1008) of real
+  RedP: array(1..1008) of real
+  BlueP: array(1..1008) of real
+  GreenP: array(1..1008) of real
+  OrangeP: array(1..1008) of real
+  iTrackP: array(1..1008) of real
+  HallwayP: array(1..1008) of real
+  
+  NurseCount: array(Tier) of real
+  Group1: array(Tier) of real
+  Group2: array(Tier) of real
+  
+  
+  sigmashift1: array(1..1008) of real
+  sigmaHoD1: array(1..1008) of real
+  sigmaDoW1: array(1..1008) of real
+  sigmaW1: array(1..1008) of real
+!  sigmaH1: array(1..1008) of real
+  Coverage1: array(1..1008) of real
+ 
+  Coverage2: array(1..1008) of real
+  sigmashift2: array(1..1008) of real
+  sigmaHoD2: array(1..1008) of real
+  sigmaDoW2: array(1..1008) of real
+  sigmaW2:array(1..1008) of real
+!  sigmaH2: array(1..1008) of real  
+  
+  Coverage3: array(1..1008) of real
+  sigmashift3: array(1..1008) of real
+  sigmaHoD3: array(1..1008) of real
+  sigmaDoW3: array(1..1008) of real
+  sigmaW3:array(1..1008) of real
+!  sigmaH3: array(1..1008) of real 
+
+  Nred: array(1..1008) of real
+  Npurple:array(1..1008) of real
+  NiTrack:array(1..1008) of real
+  Nblue:array(1..1008) of real
+  Ngreen:array(1..1008) of real
+  Norange:array(1..1008) of real
+  Nhallway:array(1..1008) of real
+  NEDOU:array(1..1008) of real
+  NHourW:array(1..1008) of real
+  NHourD:array(1..1008) of real
+  NWeek:array(1..1008) of real
+  Nfloating: array(1..1008) of real
+  
+  Nred2: array(1..1008) of real
+  Npurple2:array(1..1008) of real
+  NiTrack2:array(1..1008) of real
+  Nblue2:array(1..1008) of real
+  Ngreen2:array(1..1008) of real
+  Norange2:array(1..1008) of real
+  Nhallway2:array(1..1008) of real
+  NEDOU2:array(1..1008) of real
+  NHourW2:array(1..1008) of real
+  NHourD2:array(1..1008) of real
+  NWeek2:array(1..1008) of real
+  Nfloating2: array(1..1008) of real
+  
+  Nred3: array(1..1008) of real
+  Npurple3:array(1..1008) of real
+  NiTrack3:array(1..1008) of real
+  Nblue3:array(1..1008) of real
+  Ngreen3:array(1..1008) of real
+  Norange3:array(1..1008) of real
+  Nhallway3:array(1..1008) of real
+  NEDOU3:array(1..1008) of real
+  NHourW3:array(1..1008) of real
+  NHourD3:array(1..1008) of real
+  NWeek3:array(1..1008) of real
+  Nfloating3: array(1..1008) of real  
+  
+  Nred4: array(1..1008) of real
+  Npurple4:array(1..1008) of real
+  NiTrack4:array(1..1008) of real
+  Nblue4:array(1..1008) of real
+  Ngreen4:array(1..1008) of real
+  Norange4:array(1..1008) of real
+  Nhallway4:array(1..1008) of real
+  NEDOU4:array(1..1008) of real
+  NHourW4:array(1..1008) of real
+  NHourD4:array(1..1008) of real
+  NWeek4:array(1..1008) of real
+  Nfloating4: array(1..1008) of real
+  
+  Nred5: array(1..1008) of real
+  Npurple5:array(1..1008) of real
+  NiTrack5:array(1..1008) of real
+  Nblue5:array(1..1008) of real
+  Ngreen5:array(1..1008) of real
+  Norange5:array(1..1008) of real
+  Nhallway5:array(1..1008) of real
+  NEDOU5:array(1..1008) of real
+  NHourW5:array(1..1008) of real
+  NHourD5:array(1..1008) of real
+  NWeek5:array(1..1008) of real
+  Nfloating5: array(1..1008) of real
+  
+  Roster: array(Tier, WeekendG, Positions, ShiftT, Day) of mpvar
+  npr: mpvar 
+  shortagePurple: array(TotalHours) of mpvar
+  shortageEDOU: array(TotalHours) of mpvar
+  shortageFloat: array(TotalHours) of mpvar
+  
+  shortagePurple2: array(TotalHours) of mpvar
+  shortageEDOU2: array(TotalHours) of mpvar
+  shortageFloat2: array(TotalHours) of mpvar
+  
+  shortagePurple3: array(TotalHours) of mpvar
+  shortageEDOU3: array(TotalHours) of mpvar
+  shortageFloat3: array(TotalHours) of mpvar  
+  
+  shortagePurple4: array(TotalHours) of mpvar
+  shortageEDOU4: array(TotalHours) of mpvar
+  shortageFloat4: array(TotalHours) of mpvar
+  
+  shortagePurple5: array(TotalHours) of mpvar
+  shortageEDOU5: array(TotalHours) of mpvar
+  shortageFloat5: array(TotalHours) of mpvar 
+end-declarations
+
+initialisations from "mmsheet.csv:nurses_data.csv"
+  [Name,NurseTier,NurseGroup,PosPref] as "[R2C1:R201C5]"
+end-initialisations
+
+initialisations from "mmsheet.csv:patient_forecast (4).csv"
+  [WeekP,HourD,HourW,FloatingP,PurpleP,EDOUP,RedP, BlueP, GreenP, OrangeP, iTrackP, HallwayP] as "[R2C1:R1009C13]"
+end-initialisations
+
+initialisations from "NursePH1.dat"
+  Positions PodType Floating MaxShifts DayWeek AdminPos PodPositions
+end-initialisations
+
+initialisations from "mmsheet.csv:nurses_count[64].csv"
+  [NurseCount,Group1,Group2] as "[R2C1:R10C4]"
+end-initialisations
+
+initialisations from "mmsheet.csv:shift1 (3).csv"
+  [sigmaW1,sigmaDoW1,sigmaHoD1,sigmashift1,Coverage1] as "[R2C1:R1009C6]"
+end-initialisations
+
+initialisations from "mmsheet.csv:shift2 (3).csv"
+  [sigmaW2,sigmaDoW2,sigmaHoD2,sigmashift2,Coverage2] as "[R2C1:R1009C6]"
+end-initialisations
+
+initialisations from "mmsheet.csv:shift3 (3).csv"
+  [sigmaW3,sigmaDoW3,sigmaHoD3,sigmashift3,Coverage3] as "[R2C1:R1009C6]"
+end-initialisations
+
+initialisations from "mmsheet.csv:nurse_demand (1).csv"
+  [NWeek,NHourD,NHourW,Nred,Npurple,NiTrack,Nblue,Ngreen, Norange, Nhallway,NEDOU,Nfloating] as "[R2C1:R1009C13]"
+end-initialisations
+
+initialisations from "mmsheet.csv:nurse_demand (Round 2).csv"
+  [NWeek2,NHourD2,NHourW2,Nred2,Npurple2,NiTrack2,Nblue2,Ngreen2, Norange2, Nhallway2,NEDOU2,Nfloating2] as "[R2C1:R1009C13]"
+end-initialisations
+
+writeln("Begin running model")
+
+
+forall(q in Tier,g in WeekendG,j in Positions, i in ShiftT, d in Day) Roster(q,g,j,i,d) is_integer
+
+
+npr is_semint 0
+forall(t in TotalHours) do
+  shortageFloat(t) is_semint 0
+  shortageEDOU(t) is_semint 0 
+  shortagePurple(t) is_semint 0
+  
+  shortageFloat2(t) is_semint 0
+  shortageEDOU2(t) is_semint 0 
+  shortagePurple2(t) is_semint 0
+end-do
+
+
+
+
+
+
+function dayOfHour(t: integer): integer
+  returned := (t-1) div 24 + 1
+end-function
+
+
+
+
+
+Function := sum(q in Tier, j in Positions, i in ShiftT, d in Day, g in WeekendG) Roster(q, g, j , i, d)
+
+OBJ := Function +  2*npr
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Coverage for Demand 1 
+forall(t in TotalHours) do
+  shortagePurple(t) >= (Npurple(t) - sum(q in Tier,g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageEDOU(t) >= (NEDOU(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"EDOU",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"EDOU",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"EDOU",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageFloat(t) >= (Nfloating(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"red",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"red",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"red",3,dayOfHour(t))*Coverage3(t)) +
+  (Roster(q,g,"blue",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"blue",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"blue",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"green",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"green",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"green",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"orange",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"orange",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"orange",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"hallway",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"hallway",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"hallway",3,dayOfHour(t))*Coverage3(t)))) 
+end-do
+
+
+npr >= sum(t in TotalHours) (shortageFloat(t) + shortageEDOU(t) + shortagePurple(t))
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Coverage for Demand 2
+forall(t in TotalHours) do
+  shortagePurple2(t) >= (Npurple2(t) - sum(q in Tier,g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageEDOU2(t) >= (NEDOU2(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"EDOU",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"EDOU",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"EDOU",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageFloat2(t) >= (Nfloating2(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"red",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"red",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"red",3,dayOfHour(t))*Coverage3(t)) +
+  (Roster(q,g,"blue",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"blue",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"blue",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"green",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"green",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"green",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"orange",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"orange",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"orange",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"hallway",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"hallway",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"hallway",3,dayOfHour(t))*Coverage3(t)))) 
+end-do
+
+
+npr >= sum(t in TotalHours) (shortageFloat2(t) + shortageEDOU2(t) + shortagePurple2(t))
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Coverage for Demand 3
+forall(t in TotalHours) do
+  shortagePurple3(t) >= (Npurple3(t) - sum(q in Tier,g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageEDOU3(t) >= (NEDOU3(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"EDOU",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"EDOU",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"EDOU",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageFloat3(t) >= (Nfloating3(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"red",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"red",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"red",3,dayOfHour(t))*Coverage3(t)) +
+  (Roster(q,g,"blue",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"blue",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"blue",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"green",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"green",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"green",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"orange",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"orange",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"orange",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"hallway",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"hallway",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"hallway",3,dayOfHour(t))*Coverage3(t)))) 
+end-do
+
+
+npr >= sum(t in TotalHours) (shortageFloat3(t) + shortageEDOU3(t) + shortagePurple3(t))
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Coverage for Demand 4
+forall(t in TotalHours) do
+  shortagePurple4(t) >= (Npurple4(t) - sum(q in Tier,g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageEDOU4(t) >= (NEDOU4(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"EDOU",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"EDOU",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"EDOU",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageFloat4(t) >= (Nfloating4(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"red",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"red",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"red",3,dayOfHour(t))*Coverage3(t)) +
+  (Roster(q,g,"blue",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"blue",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"blue",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"green",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"green",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"green",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"orange",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"orange",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"orange",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"hallway",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"hallway",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"hallway",3,dayOfHour(t))*Coverage3(t)))) 
+end-do
+
+
+npr >= sum(t in TotalHours) (shortageFloat4(t) + shortageEDOU4(t) + shortagePurple4(t))
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Coverage for Demand 5
+forall(t in TotalHours) do
+  shortagePurple5(t) >= (Npurple5(t) - sum(q in Tier,g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageEDOU5(t) >= (NEDOU5(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"EDOU",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"EDOU",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"EDOU",3,dayOfHour(t))*Coverage3(t))))
+end-do
+
+forall(t in TotalHours) do
+  shortageFloat5(t) >= (Nfloating5(t) - sum(q in Tier, g in WeekendG)((Roster(q,g,"red",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"red",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"red",3,dayOfHour(t))*Coverage3(t)) +
+  (Roster(q,g,"blue",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"blue",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"blue",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"green",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"green",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"green",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"orange",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"orange",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"orange",3,dayOfHour(t))*Coverage3(t)) + 
+  (Roster(q,g,"hallway",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"hallway",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"hallway",3,dayOfHour(t))*Coverage3(t)))) 
+end-do
+
+
+npr >= sum(t in TotalHours) (shortageFloat5(t) + shortageEDOU5(t) + shortagePurple5(t))
+
+
+
+CoverageCS := npr >= 0
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Staffing Bounds 
+!Admin Positions
+forall(j in AdminPos, t in TotalHours) do
+  AdminShift1(j, t) := sum(q in Tier, g in WeekendG) Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t)
+
+  AdminShift2(j,t) := sum(q in Tier, g in WeekendG) Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t)
+
+  AdminShift3(j,t) := sum(q in Tier, g in WeekendG) Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t)
+
+  AdminLowerBoundCS(j,t):= 1 <= AdminShift1(j,t) + AdminShift2(j,t)+ AdminShift3(j,t)
+  AdminUpperBoundCS(j,t):= AdminShift1(j,t) + AdminShift2(j,t) + AdminShift3(j,t)  <= 2
+end-do
+
+! Pod Positions
+forall(j in PodPositions, t in TotalHours) do
+  if j = "red" then
+    RedShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    RedShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    RedShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := RedP(t)
+    StaffLowerBoundCS(j,t):= 0 <= RedShift1(t) + RedShift2(t)+ RedShift3(t)
+    StaffUpperBoundCS(j,t):= RedShift1(t) + RedShift2(t) + RedShift3(t)  <= RedP(t)+3
+  
+  elif j = "purple" then
+    PurpleShift1(t) := sum(q in Tier, g in WeekendG)(Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    PurpleShift2(t) := sum(q in Tier, g in WeekendG)(Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    PurpleShift3(t) := sum(q in Tier, g in WeekendG)(Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(PurpleP(t)/7)
+    StaffLowerBoundCS(j,t):= 0 <= PurpleShift1(t) + PurpleShift2(t)+ PurpleShift3(t)
+    StaffUpperBoundCS(j,t):= PurpleShift1(t) + PurpleShift2(t) + PurpleShift3(t)  <= ceil(PurpleP(t)/7)+3
+  
+  elif j = "iTrack" then
+    iTrackShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    iTrackShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    iTrackShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(iTrackP(t)/12)
+    StaffLowerBoundCS(j,t):= 0 <= iTrackShift1(t) + iTrackShift2(t) +  iTrackShift3(t)
+    StaffUpperBoundCS(j,t):=      iTrackShift1(t) + iTrackShift2(t) +  iTrackShift3(t)  <= ceil(iTrackP(t)/12)+3
+
+  elif j = "blue" then
+    BlueShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    BlueShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    BlueShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(BlueP(t)/5)
+    StaffLowerBoundCS(j,t):= 0 <= BlueShift1(t) + BlueShift2(t) +  BlueShift3(t)
+    StaffUpperBoundCS(j,t):=      BlueShift1(t) + BlueShift2(t) +  BlueShift3(t)  <= ceil(BlueP(t)/5)+3
+
+  elif j = "green" then
+    GreenShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    GreenShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    GreenShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(GreenP(t)/5)
+    StaffLowerBoundCS(j,t):= 0 <= GreenShift1(t) + GreenShift2(t) +  GreenShift3(t)
+    StaffUpperBoundCS(j,t):=      GreenShift1(t) + GreenShift2(t) +  GreenShift3(t)  <= ceil(GreenP(t)/5)+3
+    
+  elif j = "orange" then
+    OrangeShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    OrangeShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    OrangeShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(OrangeP(t)/5)
+    StaffLowerBoundCS(j,t):= 0 <= OrangeShift1(t) + OrangeShift2(t) +  OrangeShift3(t)
+    StaffUpperBoundCS(j,t):=      OrangeShift1(t) + OrangeShift2(t) +  OrangeShift3(t)  <= ceil(OrangeP(t)/5)+3
+    
+  elif j = "EDOU" then
+    EDOUShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    EDOUShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    EDOUShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(EDOUP(t)/5)
+    StaffLowerBoundCS(j,t):= 0 <= EDOUShift1(t) + EDOUShift2(t) +  EDOUShift3(t)
+    StaffUpperBoundCS(j,t):=      EDOUShift1(t) + EDOUShift2(t) +  EDOUShift3(t)  <= ceil(EDOUP(t)/5)+3
+    
+  elif j = "hallway" then
+    HallwayShift1(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,1,dayOfHour(t)) * Coverage1(t))
+    HallwayShift2(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,2,dayOfHour(t)) * Coverage2(t))
+    HallwayShift3(t) := sum(q in Tier, g in WeekendG) (Roster(q,g,j,3,dayOfHour(t)) * Coverage3(t))
+
+    n := ceil(HallwayP(t)/5)
+    StaffLowerBoundCS(j,t):= 0 <= HallwayShift1(t) + HallwayShift2(t) +  HallwayShift3(t)
+    StaffUpperBoundCS(j,t):=      HallwayShift1(t) + HallwayShift2(t) +  HallwayShift3(t)  <= ceil(HallwayP(t)/5)+3
+
+end-if
+
+end-do
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+! Tier eligibility for positions
+forall(j in AdminPos, q in Tier, i in ShiftT, g in WeekendG, d in Day) do
+  if q<=6 then
+    Roster(q,g,j,i,d) = 0
+  end-if
+end-do
+
+
+
+
+
+
+minimise(OBJ)
+
+
+r := sum(t in TotalHours, q in Tier, g in WeekendG)((Roster(q,g,"purple",1,dayOfHour(t))*Coverage1(t)) + (Roster(q,g,"purple",2,dayOfHour(t))*Coverage2(t))+(Roster(q,g,"purple",3,dayOfHour(t))*Coverage3(t)))
+writeln("maximum insufficiency =  ", getsol(npr))
+writeln("Number of scheduled nurse shifts =  ", getsol(Function))
+writeln("Objective Function =  ", getsol(OBJ))
+writeln
+
+writeln("End running model")
+
+end-model
